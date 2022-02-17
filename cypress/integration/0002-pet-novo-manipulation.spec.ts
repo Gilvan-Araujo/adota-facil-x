@@ -1,6 +1,6 @@
 describe('Add pet page (direct interaction)', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:3000/pet/novo?type=interacao')
+    cy.visit('http://localhost:3000/pet/novo')
   })
 
   it('should go to the right page', () => {
