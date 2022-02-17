@@ -6,8 +6,6 @@ import {
   Collapse,
   IconButton,
   Card as MUICard,
-  Menu,
-  MenuItem,
   Theme,
   Typography,
   createStyles,
@@ -15,7 +13,6 @@ import {
 } from '@material-ui/core'
 import { red } from '@material-ui/core/colors'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import MoreVertIcon from '@material-ui/icons/MoreVert'
 import WhatsAppIcon from '@material-ui/icons/WhatsApp'
 import clsx from 'clsx'
 import React, { useState } from 'react'
@@ -53,72 +50,20 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-const ITEM_HEIGHT = 48
-
 export default function Card({ pet }: CardProps) {
   const classes = useStyles()
   const [expanded, setExpanded] = useState(false)
-
-  // Menu-exclusive settings
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
-  const open = Boolean(anchorEl)
-
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget)
-  }
-
-  const handleClose = () => {
-    setAnchorEl(null)
-  }
-
-  const handleCloseWhatsapp = () => {
-    window.open(pet.phoneContact, '_blank')
-    setAnchorEl(null)
-  }
-
-  const handleCloseCollapse = () => {
-    setExpanded(!expanded)
-    setAnchorEl(null)
-  }
 
   return (
     <MUICard className={classes.root}>
       <CardHeader
         title={`${pet.name}`}
         subheader={`${pet.age} ${pet.age > 1 ? 'anos' : 'ano'}`}
-        action={
-          <IconButton
-            aria-label="mais configurações"
-            aria-controls="menu"
-            aria-haspopup="true"
-            onClick={handleClick}
-          >
-            <MoreVertIcon />
-          </IconButton>
-        }
       />
-      <Menu
-        id="long-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={open}
-        onClose={handleClose}
-        PaperProps={{
-          style: {
-            maxHeight: ITEM_HEIGHT * 4.5,
-            width: '20ch'
-          }
-        }}
-      >
-        <MenuItem onClick={handleCloseWhatsapp}>Falar no whatsapp</MenuItem>
-        <MenuItem onClick={handleCloseCollapse}>
-          {expanded ? 'Menos' : 'Mais'} detalhes
-        </MenuItem>
-      </Menu>
       <CardMedia className={classes.media} image={pet.image} title={pet.name} />
       <CardContent>
         <Typography variant="subtitle2" color="textSecondary" component="p">
-          Deslize para mais detalhes / <br /> Abra o menu para mais opções
+          Deslize para mais detalhes
         </Typography>
       </CardContent>
       <CardActions disableSpacing>

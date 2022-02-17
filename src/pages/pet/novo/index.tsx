@@ -2,17 +2,12 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import {
   FormControlLabel,
   FormHelperText,
-  InputLabel,
-  MenuItem,
   Radio,
-  Select,
   TextField
 } from '@material-ui/core'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import Head from 'next/head'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
-import Custom404 from 'pages/404'
 import React, { useCallback, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { useForm } from 'react-hook-form'
@@ -28,8 +23,6 @@ import createWhatsappLink from '@utils/createWhatsappLink'
 import * as S from '@styles/pages/newPet'
 
 const Form = () => {
-  const { query } = useRouter()
-
   const [image, setImage] = useState<File>()
 
   const schema = Yup.object().shape({
@@ -124,10 +117,6 @@ const Form = () => {
     accept: 'image/jpg, image/jpeg, image/png'
   })
 
-  if (!query.type || (query.type !== 'menu' && query.type !== 'interacao')) {
-    return <Custom404 />
-  }
-
   return (
     <>
       <Head>
@@ -160,63 +149,37 @@ const Form = () => {
             data-cy="name"
           />
 
-          {query.type === 'menu' && (
-            <S.FormControl variant="outlined" error={errors.type}>
-              <InputLabel>Tipo</InputLabel>
-              <Select
-                {...register('type')}
-                variant="outlined"
-                data-cy="type-select"
-                label="Tipo"
-              >
-                <MenuItem value="cCachorro" data-cy="type-dog">
-                  Cachorro
-                </MenuItem>
-                <MenuItem value="gato" data-cy="type-cat">
-                  Gato
-                </MenuItem>
-              </Select>
-              {errors.type && (
-                <FormHelperText variant="outlined" required error={errors.type}>
-                  {errors.type.message}
-                </FormHelperText>
-              )}
-            </S.FormControl>
-          )}
-
-          {query.type === 'interacao' && (
-            <S.FormControl error={errors.type}>
-              <S.RadioGroup {...register('type')}>
-                <FormControlLabel
-                  value="cachorro"
-                  control={
-                    <Radio
-                      color="primary"
-                      data-cy="type-dog"
-                      {...register('type')}
-                    />
-                  }
-                  label="Cachorro"
-                  labelPlacement="start"
-                />
-                <FormControlLabel
-                  value="gato"
-                  control={
-                    <Radio
-                      color="primary"
-                      data-cy="type-cat"
-                      {...register('type')}
-                    />
-                  }
-                  label="Gato"
-                  labelPlacement="start"
-                />
-              </S.RadioGroup>
-              <FormHelperText variant="outlined">
-                {errors.type && errors.type.message}
-              </FormHelperText>
-            </S.FormControl>
-          )}
+          <S.FormControl error={errors.type}>
+            <S.RadioGroup {...register('type')}>
+              <FormControlLabel
+                value="cachorro"
+                control={
+                  <Radio
+                    color="primary"
+                    data-cy="type-dog"
+                    {...register('type')}
+                  />
+                }
+                label="Cachorro"
+                labelPlacement="start"
+              />
+              <FormControlLabel
+                value="gato"
+                control={
+                  <Radio
+                    color="primary"
+                    data-cy="type-cat"
+                    {...register('type')}
+                  />
+                }
+                label="Gato"
+                labelPlacement="start"
+              />
+            </S.RadioGroup>
+            <FormHelperText variant="outlined">
+              {errors.type && errors.type.message}
+            </FormHelperText>
+          </S.FormControl>
         </S.FormRow>
 
         <S.FormRow>
@@ -243,56 +206,37 @@ const Form = () => {
         </S.FormRow>
 
         <S.FormRow>
-          {query.type === 'menu' && (
-            <S.FormControl variant="outlined" error={errors.sex}>
-              <InputLabel>Sexo</InputLabel>
-              <Select {...register('sex')} data-cy="sex-select" label="sexo">
-                <MenuItem value="macho" data-cy="sex-male">
-                  Macho
-                </MenuItem>
-                <MenuItem value="fêmea" data-cy="sex-female">
-                  Fêmea
-                </MenuItem>
-              </Select>
-              <FormHelperText variant="outlined" error={errors.type}>
-                {errors.sex && errors.sex.message}
-              </FormHelperText>
-            </S.FormControl>
-          )}
-
-          {query.type === 'interacao' && (
-            <S.FormControl error={errors.sex}>
-              <S.RadioGroup {...register('sex')}>
-                <FormControlLabel
-                  value="macho"
-                  control={
-                    <Radio
-                      color="primary"
-                      data-cy="sex-male"
-                      {...register('sex')}
-                    />
-                  }
-                  label="Macho"
-                  labelPlacement="start"
-                />
-                <FormControlLabel
-                  value="fêmea"
-                  control={
-                    <Radio
-                      color="primary"
-                      data-cy="sex-female"
-                      {...register('sex')}
-                    />
-                  }
-                  label="Fêmea"
-                  labelPlacement="start"
-                />
-              </S.RadioGroup>
-              <FormHelperText variant="outlined">
-                {errors.sex && errors.sex.message}
-              </FormHelperText>
-            </S.FormControl>
-          )}
+          <S.FormControl error={errors.sex}>
+            <S.RadioGroup {...register('sex')}>
+              <FormControlLabel
+                value="macho"
+                control={
+                  <Radio
+                    color="primary"
+                    data-cy="sex-male"
+                    {...register('sex')}
+                  />
+                }
+                label="Macho"
+                labelPlacement="start"
+              />
+              <FormControlLabel
+                value="fêmea"
+                control={
+                  <Radio
+                    color="primary"
+                    data-cy="sex-female"
+                    {...register('sex')}
+                  />
+                }
+                label="Fêmea"
+                labelPlacement="start"
+              />
+            </S.RadioGroup>
+            <FormHelperText variant="outlined">
+              {errors.sex && errors.sex.message}
+            </FormHelperText>
+          </S.FormControl>
 
           <InputMask {...register('phone')} mask="(99) 99999-9999">
             {() => (
@@ -353,7 +297,5 @@ const Form = () => {
     </>
   )
 }
-
-Form.getInitialProps = async ({ query }: { query: string }) => ({ query })
 
 export default Form
