@@ -11,7 +11,6 @@ import logo from '../../public/logo.svg'
 function Home() {
   const router = useRouter()
 
-  // manipulacao
   const matches = useMediaQuery('(min-width:430px)')
   const [sliderValue, setSliderValue] = useState(50)
 
@@ -43,7 +42,7 @@ function Home() {
             }}
             onChangeCommitted={(_, value) => {
               if (value <= 20) router.push('/pets')
-              if (value >= 80) router.push('/pet/novo?type=interacao')
+              if (value >= 80) router.push('/pet/novo')
             }}
           />
           <div className={`${sliderValue >= 80 ? 'highlight' : ''}`}>
