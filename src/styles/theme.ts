@@ -3,9 +3,9 @@ import { createTheme } from '@material-ui/core/styles'
 
 const theme = createTheme({
   palette: {
-    type: 'dark',
-    primary: lightBlue,
-    secondary: amber,
+    type: 'light',
+    primary: amber,
+    secondary: lightBlue,
     success: green,
     error: red
   }
